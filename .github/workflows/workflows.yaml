@@ -1,0 +1,20 @@
+name: Deploy to Firebase (master only)
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Deploy to Firebase
+      uses: w9jds/firebase-action@v1.0.1
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        PROJECT_ID: "kirsch-web"
+      with:
+        args: deploy
