@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ .Site.Title }}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: Georgia, "Times New Roman", serif;
+    text-align: center;
+    color: #222;
+    background: #fff;
+  }
+  h1 {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    margin: 0.9rem 0 0.6rem;
+    padding-left: 0.25em;
+  }
+  img.hero {
+    width: 90%;
+    max-width: 1400px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    transition: opacity 200ms ease;
+  }
+  img.hero.fading { opacity: 0; }
+  nav {
+    margin: 0 0 1.25rem;
+    font-size: 1.05rem;
+    letter-spacing: 0.05em;
+  }
+  nav a {
+    color: #333;
+    text-decoration: none;
+    padding: 0 0.25rem;
+  }
+  nav a:hover { text-decoration: underline; }
+  nav a.active { font-weight: 700; color: #000; }
+  .sep { color: #aaa; }
+  footer {
+    margin: 1.5rem 0 1.25rem;
+    font-size: 0.85rem;
+    color: #888;
+    letter-spacing: 0.03em;
+  }
+</style>
+</head>
+<body>
+<h1>KIRSCH</h1>
+<nav id="years">
+  <a href="/images/family-2012.jpg" data-year="2012">2012</a><span class="sep"> · </span>
+  <a href="/images/family-2013.jpg" data-year="2013">2013</a><span class="sep"> · </span>
+  <a href="/images/family-2016.jpg" data-year="2016">2016</a><span class="sep"> · </span>
+  <a href="/images/family-2017.jpg" data-year="2017">2017</a><span class="sep"> · </span>
+  <a href="/images/family-2018.png" data-year="2018">2018</a><span class="sep"> · </span>
+  <a href="/images/family-2019.jpeg" data-year="2019">2019</a><span class="sep"> · </span>
+  <a href="/images/family-2023.jpeg" data-year="2023">2023</a><span class="sep"> · </span>
+  <a href="/images/family-2024.jpeg" data-year="2024" class="active">2024</a>
+</nav>
+<img id="hero" class="hero" src="/images/family-2024.jpeg" alt="Kirsch family 2024">
+<footer>Last updated {{ now.Format "January 2, 2006" }}</footer>
+<script>
+(function () {
+  var hero = document.getElementById('hero');
+  var nav = document.getElementById('years');
+  var links = nav.querySelectorAll('a[data-year]');
+
+  function show(year, push) {
+    var link = nav.querySelector('a[data-year="' + year + '"]');
+    if (!link) return;
+    var src = link.getAttribute('href');
+    links.forEach(function (a) { a.classList.toggle('active', a === link); });
+    hero.classList.add('fading');
+    var img = new Image();
+    img.onload = function () {
+      hero.src = src;
+      hero.alt = 'Kirsch family ' + year;
+      hero.classList.remove('fading');
+    };
+    img.src = src;
+    if (push) history.replaceState(null, '', '#' + year);
+  }
+
+  links.forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      show(link.getAttribute('data-year'), true);
+    });
+  });
+
+  var initial = (location.hash || '').replace('#', '');
+  if (initial) show(initial, false);
+})();
+</script>
+</body>
+</html>

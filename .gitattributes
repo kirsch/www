@@ -8,3 +8,4 @@ family-2016.jpg filter=lfs diff=lfs merge=lfs -text
 family-2017.big.jpg filter=lfs diff=lfs merge=lfs -text
 family-2017.jpg filter=lfs diff=lfs merge=lfs -text
 family-2023.jpeg filter=lfs diff=lfs merge=lfs -text
+family-2024.jpeg filter=lfs diff=lfs merge=lfs -text

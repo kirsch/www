@@ -1,0 +1,5 @@
+baseURL = "https://www.kirsch.org/"
+languageCode = "en-us"
+title = "Kirsch"
+enableRobotsTXT = true
+disableKinds = ["taxonomy", "term", "RSS", "sitemap"]
