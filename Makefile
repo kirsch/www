@@ -1,4 +1,4 @@
-.PHONY: build view clean
+.PHONY: build view clean deploy
 
 build:
 	hugo
@@ -8,3 +8,6 @@ view:
 
 clean:
 	rm -rf public resources
+
+deploy: build
+	aws s3 sync public/ s3://www.kirsch.org/ --delete
